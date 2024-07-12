@@ -14,10 +14,16 @@ app.get('/imagine', async (req, res) => {
   }
 
   try {
+    console.log('Starting image generation...');
+    const startTime = Date.now();
+
     // Generate an image with the Imagine API
     const response = await imagine.generations(prompt, {
       style: GenerationStyle.IMAGINE_V5,
     });
+
+    const endTime = Date.now();
+    console.log(`Image generation completed in ${endTime - startTime}ms`);
 
     // Check if the request was successful
     if (response.status() === Status.OK) {
