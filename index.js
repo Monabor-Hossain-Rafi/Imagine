@@ -16,7 +16,7 @@ if (!fs.existsSync(publicDir)) {
 app.use(express.static('public'));
 
 // Initialize the client with your API key
-const imagine = client("vk-xpsTPXCB07sPA89cJ2dpewkgZ9311QjDI9xdTuZcKCF9sT");
+const imagine = client("");
 
 app.get('/imagine', async (req, res) => {
   const prompt = req.query.prompt;
