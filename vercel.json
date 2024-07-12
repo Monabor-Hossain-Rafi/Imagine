@@ -10,10 +10,6 @@
     {
       "src": "/imagine",
       "dest": "/index.js"
-    },
-    {
-      "src": "/imagine/(.*)",
-      "dest": "/index.js"
     }
   ]
 }
