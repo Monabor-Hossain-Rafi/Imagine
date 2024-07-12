@@ -1,22 +1,11 @@
 const express = require('express');
 const { client, GenerationStyle, Status } = require('imaginesdk');
-const fs = require('fs');
-const path = require('path');
 
 const app = express();
 const port = 3000;
 
-// Create the public directory if it does not exist
-const publicDir = path.join(__dirname, 'public');
-if (!fs.existsSync(publicDir)) {
-  fs.mkdirSync(publicDir);
-}
-
-// Serve static files from the public directory
-app.use(express.static('public'));
-
 // Initialize the client with your API key
-const imagine = client("");
+const imagine = client("vk-xpsTPXCB07sPA89cJ2dpewkgZ9311QjDI9xdTuZcKCF9sT");
 
 app.get('/imagine', async (req, res) => {
   const prompt = req.query.prompt;
@@ -33,17 +22,8 @@ app.get('/imagine', async (req, res) => {
     // Check if the request was successful
     if (response.status() === Status.OK) {
       const image = response.getOrThrow();
-      const fileName = `output-${Date.now()}.png`;
-      const filePath = path.join(publicDir, fileName);
-
-      // Convert ArrayBuffer to Buffer
-      const buffer = Buffer.from(image.buffer());
-
-      // Save the image buffer to a file
-      fs.writeFileSync(filePath, buffer);
-
-      const imageUrl = `${req.protocol}://${req.get('host')}/${fileName}`;
-      res.json({ imageUrl });
+      const directDownloadUrl = image.url; // Assuming the API provides a direct download URL
+      res.json({ imageUrl: directDownloadUrl });
     } else {
       const error = response.errorOrThrow();
       console.log(error);
